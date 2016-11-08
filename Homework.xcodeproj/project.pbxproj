@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE13766A1DCF5FD80075BA56 /* CoraDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1376691DCF5FD80075BA56 /* CoraDataManager.m */; };
 		CE7997EB1DCBE538002A243E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7997EA1DCBE538002A243E /* main.m */; };
 		CE7997EE1DCBE538002A243E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7997ED1DCBE538002A243E /* AppDelegate.m */; };
 		CE7997F11DCBE538002A243E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7997F01DCBE538002A243E /* ViewController.m */; };
@@ -14,9 +15,13 @@
 		CE7997F71DCBE538002A243E /* Homework.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE7997F51DCBE538002A243E /* Homework.xcdatamodeld */; };
 		CE7997F91DCBE538002A243E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE7997F81DCBE538002A243E /* Assets.xcassets */; };
 		CE7997FC1DCBE538002A243E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE7997FA1DCBE538002A243E /* LaunchScreen.storyboard */; };
+		CEA693D61DCDDD9C00D45105 /* DownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA693D51DCDDD9C00D45105 /* DownloadManager.m */; };
+		CEA693D91DCDE24800D45105 /* DataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA693D81DCDE24800D45105 /* DataTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE1376681DCF5FD80075BA56 /* CoraDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoraDataManager.h; sourceTree = "<group>"; };
+		CE1376691DCF5FD80075BA56 /* CoraDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoraDataManager.m; sourceTree = "<group>"; };
 		CE7997E61DCBE538002A243E /* Homework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE7997EA1DCBE538002A243E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CE7997EC1DCBE538002A243E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -28,6 +33,10 @@
 		CE7997F81DCBE538002A243E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE7997FB1DCBE538002A243E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE7997FD1DCBE538002A243E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEA693D41DCDDD9C00D45105 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadManager.h; sourceTree = "<group>"; };
+		CEA693D51DCDDD9C00D45105 /* DownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadManager.m; sourceTree = "<group>"; };
+		CEA693D71DCDE24800D45105 /* DataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTableViewCell.h; sourceTree = "<group>"; };
+		CEA693D81DCDE24800D45105 /* DataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +73,12 @@
 				CE7997ED1DCBE538002A243E /* AppDelegate.m */,
 				CE7997EF1DCBE538002A243E /* ViewController.h */,
 				CE7997F01DCBE538002A243E /* ViewController.m */,
+				CEA693D41DCDDD9C00D45105 /* DownloadManager.h */,
+				CEA693D51DCDDD9C00D45105 /* DownloadManager.m */,
+				CEA693D71DCDE24800D45105 /* DataTableViewCell.h */,
+				CEA693D81DCDE24800D45105 /* DataTableViewCell.m */,
+				CE1376681DCF5FD80075BA56 /* CoraDataManager.h */,
+				CE1376691DCF5FD80075BA56 /* CoraDataManager.m */,
 				CE7997F21DCBE538002A243E /* Main.storyboard */,
 				CE7997F81DCBE538002A243E /* Assets.xcassets */,
 				CE7997FA1DCBE538002A243E /* LaunchScreen.storyboard */,
@@ -108,11 +123,12 @@
 		CE7997DE1DCBE538002A243E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = Toxa;
 				TargetAttributes = {
 					CE7997E51DCBE538002A243E = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = E9A3K3TA5Z;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -156,6 +172,9 @@
 				CE7997F11DCBE538002A243E /* ViewController.m in Sources */,
 				CE7997F71DCBE538002A243E /* Homework.xcdatamodeld in Sources */,
 				CE7997EE1DCBE538002A243E /* AppDelegate.m in Sources */,
+				CEA693D91DCDE24800D45105 /* DataTableViewCell.m in Sources */,
+				CE13766A1DCF5FD80075BA56 /* CoraDataManager.m in Sources */,
+				CEA693D61DCDDD9C00D45105 /* DownloadManager.m in Sources */,
 				CE7997EB1DCBE538002A243E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,6 +219,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -247,6 +267,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -274,6 +295,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = E9A3K3TA5Z;
 				INFOPLIST_FILE = Homework/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toxa.apps.Homework;
@@ -285,6 +307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = E9A3K3TA5Z;
 				INFOPLIST_FILE = Homework/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.toxa.apps.Homework;
@@ -311,6 +334,7 @@
 				CE7998021DCBE538002A243E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

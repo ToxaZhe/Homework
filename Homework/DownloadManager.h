@@ -9,5 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface DownloadManager : NSObject
+@property (strong, nonatomic) NSURLSessionDataTask *bigFileTask;
+@property (strong, nonatomic) NSMutableData *bigFileData;
+@property (nonatomic) double expectedBigFileLength;
+@property BOOL fileDownloaded;
 
+- (void)bigFileDownloadingAsync:(NSString *)urlString;
 @end
