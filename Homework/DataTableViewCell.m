@@ -10,17 +10,6 @@
 
 @implementation DataTableViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    
-}
-
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-}
-
 - (IBAction)startPauseDowloading:(UIButton *)sender {
    [self beginDowload];
 }

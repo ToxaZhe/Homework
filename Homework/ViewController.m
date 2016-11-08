@@ -27,32 +27,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    NSString *isoUrlString = @"http://cdimage.debian.org/debian-cd/8.6.0/amd64/iso-cd/debian-8.6.0-amd64-CD-1.iso";
-    
     NSString* mp3UrlString = @"https://promodj.com/download/5908259/Eugene%20Kushner%20-%20the%20dreamer%20%28promodj.com%29.mp3@"/*http://promodj.com/download/5979204/Anna%20Lee%20-%20Live%20%40%20Sea%20Trance%20Fest%20%2831.07.2016%29%20%28promodj.com%29.mp3"*/;
     self.dataManager = [CoraDataManager new];
     self.dowloadManager = [[DownloadManager alloc] init];
-    
-    
     self.urlStrings = [[NSMutableArray alloc] init];
-//    [self.urlStrings addObject:isoUrlString];
     [self.urlStrings addObject:mp3UrlString];
-    
-
-//    [self.tableView reloadData];
     
 }
 
 -(void) onTick {
-    
-//    NSLog(@"%f",self.dowloadManager.expectedBigFileLength);
-//    NSLog(@"%lu", (unsigned long)self.dowloadManager.bigFileData.length);
     self.dowloadingProgress = [NSString stringWithFormat:@"%.2f", (double)self.dowloadManager.bigFileData.length / (double)self.dowloadManager.expectedBigFileLength * 100.0];
     self.finished = self.dowloadManager.fileDownloaded;
-//    NSLog(@"%@", self.dowloadingProgress);
     [self.tableView reloadData];
-    
-//    NSLog(@"%.2f", (double)self.dowloadManager.bigFileData.length / (double)self.dowloadManager.expectedBigFileLength * 100.0 );
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
