@@ -18,6 +18,7 @@
 @property(nonatomic, strong) NSString* dowloadingProgress;
 @property(nonatomic, strong) NSTimer* t;
 @property(nonatomic, strong) CoraDataManager* dataManager;
+@property(nonatomic, strong) NSMutableArray* dowloadManagerCollection;
 
 @property BOOL finished;
 
@@ -34,14 +35,22 @@
     NSString* song5UrlString = @"https://promodj.com/download/6079318/Mikhail%20Evdokimov%20-%20Deep%20Frequency%20Radio%20Show%20%2329%20%28promodj.com%29.mp3";
     [self.tableView setSeparatorColor:[UIColor cyanColor]];
     self.dataManager = [CoraDataManager new];
-    self.dowloadManager = [[DownloadManager alloc] init];
+//    self.dowloadManager = [[DownloadManager alloc] init];
     self.urlStrings = [[NSMutableArray alloc] initWithObjects:song1UrlString, song2UrlString,song3UrlString, song4UrlString, song5UrlString,  nil];
 }
 
--(void) onTick {
-    self.dowloadingProgress = [NSString stringWithFormat:@"%.2f", (double)self.dowloadManager.bigFileData.length / (double)self.dowloadManager.expectedBigFileLength * 100.0];
-    self.finished = self.dowloadManager.fileDownloaded;
-    [self.tableView reloadData];
+-(void) onTick: (NSTimer*) timer {
+    
+//    for (DownloadManager* loadManager in _dowloadManagerCollection) {
+    NSNumber* index = timer.userInfo;
+    NSInteger newIndex = [index integerValue];
+        DownloadManager* loadManager = [self.dowloadManagerCollection objectAtIndex:newIndex];
+        self.dowloadingProgress = [NSString stringWithFormat:@"%.2f", (double)loadManager.bigFileData.length / (double)loadManager.expectedBigFileLength * 100.0];
+        self.finished = loadManager.fileDownloaded;
+        [self.tableView reloadData];
+//    }
+    
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -53,6 +62,9 @@
     
     self.dataTableViewCell = @"DataTableViewCell";
     DataTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier: self.dataTableViewCell];
+    
+    NSInteger index = indexPath.row;
+    cell.nameLabel.text = [NSString stringWithFormat:@"Push to dowload Song %li", index + 1];
     if (_finished) {
         [self.t invalidate];
         NSMutableArray* fetchedCoreDataString = self.dataManager.getSavedDowloadInfo;
@@ -65,9 +77,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSString* urlString = [self.urlStrings objectAtIndex:indexPath.row];
-    [self.dowloadManager bigFileDownloadingAsync:urlString];
+    NSNumber* indexOfCell = [NSNumber numberWithInteger:indexPath.row];
+    DownloadManager* loadManager = [[DownloadManager alloc] init];
+    [self.dowloadManagerCollection addObject:loadManager];
+    [loadManager bigFileDownloadingAsync:urlString];
     
-    self.t = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onTick) userInfo:nil repeats:YES];
+    self.t = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onTick:) userInfo:indexOfCell repeats:YES];
 }
 
 

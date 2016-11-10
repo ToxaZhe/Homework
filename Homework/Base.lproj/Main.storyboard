@@ -49,6 +49,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="nameLabel" destination="GDR-WG-9xa" id="fpg-zS-bUz"/>
                                             <outlet property="progresLabel" destination="hjl-xp-AGJ" id="sdX-JP-iBT"/>
                                         </connections>
                                     </tableViewCell>
