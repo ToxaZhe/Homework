@@ -10,8 +10,4 @@
 
 @interface DataTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *progresLabel;
-- (IBAction)startPauseDowloading:(UIButton *)sender;
-
-@property (nonatomic, copy) void (^beginDowload)(void);
-
 @end

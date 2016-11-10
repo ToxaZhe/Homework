@@ -1,12 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,42 +18,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g6J-Bj-6IV">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="99" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g6J-Bj-6IV">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DataTableViewCell" rowHeight="130" id="QS3-hK-ybf" customClass="DataTableViewCell">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="130"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DataTableViewCell" rowHeight="99" id="QS3-hK-ybf" customClass="DataTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QS3-hK-ybf" id="7Qg-dG-TNu">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                            <frame key="frameInset" width="375" height="98"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="hjl-xp-AGJ">
-                                                    <rect key="frame" x="8" y="97" width="359" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OzJ-Bk-Z9u">
-                                                    <rect key="frame" x="162" y="12" width="50" height="85"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="smF-h6-gqe"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <state key="normal" title="Start"/>
-                                                    <connections>
-                                                        <action selector="startPauseDowloading:" destination="QS3-hK-ybf" eventType="touchUpInside" id="MeQ-bC-KPP"/>
-                                                    </connections>
-                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="GDR-WG-9xa">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="hjl-xp-AGJ" secondAttribute="trailing" constant="8" id="2ii-gw-oYJ"/>
-                                                <constraint firstItem="hjl-xp-AGJ" firstAttribute="top" secondItem="OzJ-Bk-Z9u" secondAttribute="bottom" id="G6z-o0-bpg"/>
-                                                <constraint firstItem="OzJ-Bk-Z9u" firstAttribute="top" secondItem="7Qg-dG-TNu" secondAttribute="topMargin" constant="4" id="SkJ-px-jnn"/>
+                                                <constraint firstItem="GDR-WG-9xa" firstAttribute="top" secondItem="7Qg-dG-TNu" secondAttribute="top" constant="8" id="AKR-bw-Kmy"/>
+                                                <constraint firstAttribute="trailing" secondItem="GDR-WG-9xa" secondAttribute="trailing" id="BAd-I9-6oJ"/>
+                                                <constraint firstItem="GDR-WG-9xa" firstAttribute="leading" secondItem="7Qg-dG-TNu" secondAttribute="leading" id="CLG-mm-DYc"/>
                                                 <constraint firstAttribute="bottom" secondItem="hjl-xp-AGJ" secondAttribute="bottom" constant="8" id="njF-2I-Af0"/>
                                                 <constraint firstItem="hjl-xp-AGJ" firstAttribute="leading" secondItem="7Qg-dG-TNu" secondAttribute="leading" constant="8" id="sec-XR-9Tl"/>
-                                                <constraint firstItem="OzJ-Bk-Z9u" firstAttribute="centerX" secondItem="7Qg-dG-TNu" secondAttribute="centerX" id="wnt-An-cjK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

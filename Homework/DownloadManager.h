@@ -14,5 +14,6 @@
 @property (nonatomic) double expectedBigFileLength;
 @property BOOL fileDownloaded;
 
+
 - (void)bigFileDownloadingAsync:(NSString *)urlString;
 @end

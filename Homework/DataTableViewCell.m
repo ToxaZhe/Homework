@@ -21,9 +21,6 @@
 
 }
 
-- (IBAction)startPauseDowloading:(UIButton *)sender {
-   [self beginDowload];
-}
 @end
 
 

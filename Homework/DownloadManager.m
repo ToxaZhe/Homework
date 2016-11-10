@@ -19,10 +19,11 @@
 @implementation DownloadManager
 
 - (void)bigFileDownloadingAsync:(NSString *)urlString {
+
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-        self.bigFileTask = [defaultSession dataTaskWithURL:url];
+    self.bigFileTask = [defaultSession dataTaskWithURL:url];
     self.fileDownloaded = NO;
     [self.bigFileTask resume];
 }
@@ -34,12 +35,13 @@
         self.expectedBigFileLength = [response expectedContentLength];
         self.bigFileData = [NSMutableData data];
     }
+    
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     if (dataTask == self.bigFileTask) {
         [self.bigFileData appendData:data];
-        NSLog(@"%ld, %ld", (long)self.bigFileTask.state, dataTask.state);
+//            NSLog(@"%ld, %ld", (long)self.bigFileTask.state, dataTask.state);
         if (self.bigFileData.length == self.expectedBigFileLength) {
             self.finishedDowload = [NSDate date];
             CoraDataManager* dataManager = [CoraDataManager new];
@@ -47,8 +49,6 @@
             self.fileDownloaded = YES;
         }
     }
-    
-
 }
 
 

@@ -13,9 +13,9 @@
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(strong, nonatomic) NSString* dataTableViewCell;
-@property(nonatomic, strong) NSMutableArray* __block urlStrings;
-@property(nonatomic, strong) DownloadManager* __block dowloadManager;
-@property(nonatomic, strong) NSString* __block dowloadingProgress;
+@property(nonatomic, strong) NSMutableArray*  urlStrings;
+@property(nonatomic, strong) DownloadManager* dowloadManager;
+@property(nonatomic, strong) NSString* dowloadingProgress;
 @property(nonatomic, strong) NSTimer* t;
 @property(nonatomic, strong) CoraDataManager* dataManager;
 
@@ -27,12 +27,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString* mp3UrlString = @"https://promodj.com/download/5908259/Eugene%20Kushner%20-%20the%20dreamer%20%28promodj.com%29.mp3@"/*http://promodj.com/download/5979204/Anna%20Lee%20-%20Live%20%40%20Sea%20Trance%20Fest%20%2831.07.2016%29%20%28promodj.com%29.mp3"*/;
+    NSString* song1UrlString = @"https://promodj.com/download/5908259/Eugene%20Kushner%20-%20the%20dreamer%20%28promodj.com%29.mp3@";
+    NSString* song2UrlString = @"http://promodj.com/download/5979204/Anna%20Lee%20-%20Live%20%40%20Sea%20Trance%20Fest%20%2831.07.2016%29%20%28promodj.com%29.mp3";
+    NSString* song3UrlString = @"https://promodj.com/download/5866036/Styline%20ft.%20Dragonfly%20-%20Temptation%20%28Original%20Mix%29%20%28promodj.com%29.mp3";
+    NSString* song4UrlString = @"https://promodj.com/download/6087320/Be%20Your%20Self%20%28promodj.com%29.mp3";
+    NSString* song5UrlString = @"https://promodj.com/download/6079318/Mikhail%20Evdokimov%20-%20Deep%20Frequency%20Radio%20Show%20%2329%20%28promodj.com%29.mp3";
+    [self.tableView setSeparatorColor:[UIColor cyanColor]];
     self.dataManager = [CoraDataManager new];
     self.dowloadManager = [[DownloadManager alloc] init];
-    self.urlStrings = [[NSMutableArray alloc] init];
-    [self.urlStrings addObject:mp3UrlString];
-    
+    self.urlStrings = [[NSMutableArray alloc] initWithObjects:song1UrlString, song2UrlString,song3UrlString, song4UrlString, song5UrlString,  nil];
 }
 
 -(void) onTick {
@@ -50,34 +53,26 @@
     
     self.dataTableViewCell = @"DataTableViewCell";
     DataTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier: self.dataTableViewCell];
-    if (self.finished) {
+    if (_finished) {
         [self.t invalidate];
         NSMutableArray* fetchedCoreDataString = self.dataManager.getSavedDowloadInfo;
         cell.progresLabel.text = [fetchedCoreDataString lastObject];
     } else {
-       cell.progresLabel.text = self.dowloadingProgress; 
+        cell.progresLabel.text = self.dowloadingProgress;
     }
-    
-    
-    
-
-    cell.beginDowload = ^{
-        NSString* urlString = [self.urlStrings objectAtIndex:indexPath.row ];
-        [self.dowloadManager bigFileDownloadingAsync:urlString];
-            };
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSString* urlString = [self.urlStrings objectAtIndex:indexPath.row ];
+    NSString* urlString = [self.urlStrings objectAtIndex:indexPath.row];
     [self.dowloadManager bigFileDownloadingAsync:urlString];
     
-    self.t = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(onTick) userInfo:nil repeats:YES];
+    self.t = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onTick) userInfo:nil repeats:YES];
 }
 
 
 -(void)dealloc {
-    
+    [_t invalidate];
 }
 
 - (void)didReceiveMemoryWarning {
