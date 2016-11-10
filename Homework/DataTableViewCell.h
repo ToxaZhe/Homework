@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DataTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *progresLabel;
 @end
