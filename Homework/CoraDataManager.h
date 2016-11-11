@@ -18,5 +18,5 @@
 - (NSURL *)applicationsDocumentsDirectory;
 -(NSMutableArray*) getSavedDowloadInfo;
 -(void) saveDownloadStartDate: (NSDate*)startDate andEndDate: (NSDate*)endDate;
-
+-(void) clearCoreData;
 @end

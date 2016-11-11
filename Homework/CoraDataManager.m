@@ -75,6 +75,17 @@
     }
 }
 
+
+-(void) clearCoreData {
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DownloadInfo"];
+    NSMutableArray* downloadInfoCollection = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
+    for (NSManagedObject *managedObject in downloadInfoCollection) {
+        [_managedObjectContext deleteObject:managedObject];
+        
+    }
+}
+
 -(NSMutableArray*) getSavedDowloadInfo {
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DownloadInfo"];
@@ -88,7 +99,8 @@
         NSString* started = [dateFormatter stringFromDate:startedDate];
         NSString* finished = [dateFormatter stringFromDate:finishedDate];
         NSString* loadedFileInfo = [NSString stringWithFormat:@"starting date %@ - finished date %@", started, finished];
-        [dateStrings removeAllObjects];
+//        [dateStrings removeAllObjects];
+        NSLog(@"downloadInfoCollection ------------> %li", [downloadInfoCollection count]);
         [dateStrings addObject:loadedFileInfo];
     }
     return dateStrings;

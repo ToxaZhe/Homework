@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DownloadManager.h"
 
 @interface DataTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *progresLabel;
+@property (strong, nonatomic) DownloadManager *download;
 @end

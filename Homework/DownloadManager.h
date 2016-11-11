@@ -15,5 +15,8 @@
 @property BOOL fileDownloaded;
 
 
-- (void)bigFileDownloadingAsync:(NSString *)urlString;
+-(void)bigFileDownloadingAsync:(NSString *)urlString;
+-(void)resumePauseDownload;
+-(void) stop;
 @end
+

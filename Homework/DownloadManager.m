@@ -28,10 +28,29 @@
     [self.bigFileTask resume];
 }
 
+-(void) start {
+    [self.bigFileTask resume];
+}
+
+-(void) stop {
+    [self.bigFileTask suspend];
+}
+
+-(void)resumePauseDownload {
+    if (_bigFileTask.state == NSURLSessionTaskStateSuspended) {
+        [self start];
+    } else if (_bigFileTask.state == NSURLSessionTaskStateRunning) {
+        [self stop];
+    } else if (_bigFileTask.state == NSURLSessionTaskStateCompleted) {
+        NSLog(@"Task Completed");
+    }
+}
+
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
     completionHandler(NSURLSessionResponseAllow);
     if (dataTask == self.bigFileTask) {
         self.startingDowload = [NSDate date];
+        NSLog(@"startingdate -----------> %@", self.startingDowload);
         self.expectedBigFileLength = [response expectedContentLength];
         self.bigFileData = [NSMutableData data];
     }
@@ -44,6 +63,7 @@
 //            NSLog(@"%ld, %ld", (long)self.bigFileTask.state, dataTask.state);
         if (self.bigFileData.length == self.expectedBigFileLength) {
             self.finishedDowload = [NSDate date];
+            NSLog(@"finishingdate -----------> %@", self.finishedDowload);
             CoraDataManager* dataManager = [CoraDataManager new];
             [dataManager saveDownloadStartDate:self.startingDowload andEndDate:self.finishedDowload];
             self.fileDownloaded = YES;
