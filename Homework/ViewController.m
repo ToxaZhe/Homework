@@ -54,9 +54,10 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    for (DownloadManager* download in self.dowloadManagerCollection) {
-        [download stop];
-    }
+//    for (DownloadManager* download in self.dowloadManagerCollection) {
+//        [download stop];
+//    }
+    self.t = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onTick) userInfo:nil repeats:YES];
 }
 
 -(void) onTick{
@@ -91,13 +92,50 @@
 //        [self.t invalidate];
         NSMutableArray* fetchedCoreDataString = self.dataManager.getSavedDowloadInfo;
         NSInteger completedDownloadsNumber = [fetchedCoreDataString count];
-        NSLog(@"-------------> %li", completedDownloadsNumber);
+        NSInteger finishedNumber = completedDownloadsNumber - 1;
+//        NSString *keyAsString = [NSString stringWithFormat:@"%li", indexPath.row];
+//        NSMutableDictionary *dowloadedDateForIndexes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+//                                                    [NSNumber numberWithInteger:0], @"0",
+//                                                    [NSNumber numberWithInteger:0], @"1",
+//                                                    [NSNumber numberWithInteger:0], @"2",
+//                                                    [NSNumber numberWithInteger:0], @"3",
+//                                                    [NSNumber numberWithInteger:0], @"4",nil];
+//     
+//        [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
+//        switch (indexPath.row) {
+//            case 0:
+//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
+//            case 1:
+//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
+//            case 2:
+//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
+//            case 3:
+//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
+//            case 4:
+//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
+//            default: break;
+//        }
+        
+        NSLog(@"%li", finishedNumber);
+//        NSLog(@"mutable array = %@", dowloadedDateForIndexes);
+//        NSLog(@"%lu", (unsigned long)[dowloadedDateForIndexes count]);
 //        NSIndexPath *indexPathtoMove = [NSIndexPath indexPathForRow:completedDownloadsNumber-1 inSection:0];
 //        [tableView moveRowAtIndexPath:indexPath toIndexPath:indexPathtoMove];
-        if ([fetchedCoreDataString count]  == [_urlStrings count]) {
-            cell.progresLabel.text = [fetchedCoreDataString objectAtIndex:indexPath.row];
-            [self.t invalidate];
+//        NSInteger objectIndex = [dowloadedDateForIndexes [keyAsString] integerValue];
+//        NSLog(@"%li", objectIndex);
+//        NSLog(@"%@", dowloadedDateForIndexes);
+        if (cell.download.bigFileData.length == cell.download.expectedBigFileLength){
+            cell.progresLabel.text = [fetchedCoreDataString objectAtIndex:finishedNumber];
         }
+        
+//        cell.progresLabel.text = [fetchedCoreDataString firstObject/*objectAtIndex:[dowloadedDateForIndexes [[NSString stringWithFormat:@"%li", indexPath.row]] integerValue]*/];
+        if ([fetchedCoreDataString count] == [_urlStrings count]) {
+            NSLog(@"%@", fetchedCoreDataString);
+            
+            
+           [self.t invalidate];
+        }
+//
         
     } else {
         NSString* progress = [NSString stringWithFormat:@"%.2f", (double)cell.download.bigFileData.length / (double)cell.download.expectedBigFileLength * 100.0];
@@ -123,7 +161,7 @@
     
 //    NSLog(@"%ld", (long)lastIndexPath.row);
     
-    self.t = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onTick) userInfo:nil repeats:YES];
+//    self.t = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onTick) userInfo:nil repeats:YES];
 }
 
 
