@@ -12,9 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
+   self.moved = YES;
 }
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

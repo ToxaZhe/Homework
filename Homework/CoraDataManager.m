@@ -64,15 +64,13 @@
 
 -(void) saveDownloadStartDate: (NSDate*)startDate andEndDate: (NSDate*)endDate{
     NSManagedObjectContext *context = [self managedObjectContext];
-    
-  
     NSManagedObject *newDownload = [NSEntityDescription insertNewObjectForEntityForName:@"DownloadInfo" inManagedObjectContext:context];
     [newDownload setValue:startDate forKey:@"startingTime"];
     [newDownload setValue:endDate forKey:@"finishedTime"];
     NSError *error = nil;
-    if (![context save:&error]) {
-        NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
-    }
+        if (![context save:&error]) {
+            NSLog(@"Can't Save! %@ %@", error, [error localizedDescription]);
+        }
 }
 
 
@@ -91,6 +89,7 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DownloadInfo"];
     NSMutableArray* downloadInfoCollection = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
     NSMutableArray * dateStrings = [NSMutableArray array];
+    [self clearCoreData];
     for (NSManagedObject* downloadDate in downloadInfoCollection) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"dd.MM.YY HH:mm:ss"];
@@ -99,7 +98,6 @@
         NSString* started = [dateFormatter stringFromDate:startedDate];
         NSString* finished = [dateFormatter stringFromDate:finishedDate];
         NSString* loadedFileInfo = [NSString stringWithFormat:@"starting date %@ - finished date %@", started, finished];
-//        [dateStrings removeAllObjects];
         [dateStrings addObject:loadedFileInfo];
     }
     return dateStrings;

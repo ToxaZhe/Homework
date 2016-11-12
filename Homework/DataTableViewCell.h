@@ -13,5 +13,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *progresLabel;
 @property (strong, nonatomic) DownloadManager *download;
-@property (assign) NSInteger finishedNumber;
+@property BOOL moved;
 @end

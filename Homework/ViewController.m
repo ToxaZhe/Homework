@@ -47,32 +47,23 @@
     for (NSString* urlString in _urlStrings) {
         DownloadManager* loadManager = [[DownloadManager alloc] init];
         [self.dowloadManagerCollection addObject:loadManager];
-        [loadManager bigFileDownloadingAsync:urlString];
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
+            [loadManager bigFileDownloadingAsync:urlString];
+        });
+        
+        
     }
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    for (DownloadManager* download in self.dowloadManagerCollection) {
-//        [download stop];
-//    }
     self.t = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onTick) userInfo:nil repeats:YES];
 }
 
 -(void) onTick{
-    
-//    for (DownloadManager* loadManager in _dowloadManagerCollection) {
-//    NSNumber* index = timer.userInfo;
-//    NSLog(@"index = %@", index);
-//    NSInteger newIndex = [index integerValue];
-//        DownloadManager* loadManager = [self.dowloadManagerCollection objectAtIndex:newIndex];
-//        self.dowloadingProgress = [NSString stringWithFormat:@"%.2f", (double)loadManager.bigFileData.length / (double)loadManager.expectedBigFileLength * 100.0];
-//        self.finished = loadManager.fileDownloaded;
-        [self.tableView reloadData];
-//    }
-    
-    
+    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -84,60 +75,21 @@
     
     self.dataTableViewCell = @"DataTableViewCell";
     DataTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier: self.dataTableViewCell];
-    
     NSInteger index = indexPath.row;
+    
     cell.download = [_dowloadManagerCollection objectAtIndex:indexPath.row];
     cell.nameLabel.text = [NSString stringWithFormat:@"Push to dowload Song %li", index + 1];
-    if (cell.download.fileDownloaded) {
-//        [self.t invalidate];
+    if (cell.download.fileDownloaded && cell.moved) {
         NSMutableArray* fetchedCoreDataString = self.dataManager.getSavedDowloadInfo;
         NSInteger completedDownloadsNumber = [fetchedCoreDataString count];
         NSInteger finishedNumber = completedDownloadsNumber - 1;
-//        NSString *keyAsString = [NSString stringWithFormat:@"%li", indexPath.row];
-//        NSMutableDictionary *dowloadedDateForIndexes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-//                                                    [NSNumber numberWithInteger:0], @"0",
-//                                                    [NSNumber numberWithInteger:0], @"1",
-//                                                    [NSNumber numberWithInteger:0], @"2",
-//                                                    [NSNumber numberWithInteger:0], @"3",
-//                                                    [NSNumber numberWithInteger:0], @"4",nil];
-//     
-//        [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
-//        switch (indexPath.row) {
-//            case 0:
-//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
-//            case 1:
-//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
-//            case 2:
-//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
-//            case 3:
-//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
-//            case 4:
-//                [dowloadedDateForIndexes setObject:[NSNumber numberWithInteger: finishedNumber ] forKey: [NSString stringWithFormat:@"%li", indexPath.row]];
-//            default: break;
-//        }
-        
-        NSLog(@"%li", finishedNumber);
-//        NSLog(@"mutable array = %@", dowloadedDateForIndexes);
-//        NSLog(@"%lu", (unsigned long)[dowloadedDateForIndexes count]);
-//        NSIndexPath *indexPathtoMove = [NSIndexPath indexPathForRow:completedDownloadsNumber-1 inSection:0];
-//        [tableView moveRowAtIndexPath:indexPath toIndexPath:indexPathtoMove];
-//        NSInteger objectIndex = [dowloadedDateForIndexes [keyAsString] integerValue];
-//        NSLog(@"%li", objectIndex);
-//        NSLog(@"%@", dowloadedDateForIndexes);
-        if (cell.download.bigFileData.length == cell.download.expectedBigFileLength){
-            cell.progresLabel.text = [fetchedCoreDataString objectAtIndex:finishedNumber];
-        }
-        
-//        cell.progresLabel.text = [fetchedCoreDataString firstObject/*objectAtIndex:[dowloadedDateForIndexes [[NSString stringWithFormat:@"%li", indexPath.row]] integerValue]*/];
-        if ([fetchedCoreDataString count] == [_urlStrings count]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.progresLabel.text = [fetchedCoreDataString objectAtIndex:0];
             NSLog(@"%@", fetchedCoreDataString);
-            
-            
-           [self.t invalidate];
-        }
-//
-        
-    } else {
+            NSLog(@"finished number - %li against indexPath.row - %li", finishedNumber, indexPath.row);
+            cell.moved = NO;
+        });
+    } else if (cell.moved) {
         NSString* progress = [NSString stringWithFormat:@"%.2f", (double)cell.download.bigFileData.length / (double)cell.download.expectedBigFileLength * 100.0];
         cell.progresLabel.text = progress;
     }
@@ -145,28 +97,14 @@
     
     return cell;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-//    NSString* urlString = [self.urlStrings objectAtIndex:indexPath.row];
-    ;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DownloadManager *download = [_dowloadManagerCollection objectAtIndex:indexPath.row];
-    
     [download resumePauseDownload];
-    
-//    NSInteger dowloadsCount = [_dowloadManagerCollection count];
-//    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//    NSNumber* indexOfCell = [NSNumber numberWithInteger:lastIndexPath.row];
-   
-//    [tableView moveRowAtIndexPath:indexPath toIndexPath:lastIndexPath];
-    
-//    NSLog(@"%ld", (long)lastIndexPath.row);
-    
-//    self.t = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onTick) userInfo:nil repeats:YES];
 }
 
 
 -(void)dealloc {
-    [_t invalidate];
+//    [_t invalidate];
 }
 
 - (void)didReceiveMemoryWarning {

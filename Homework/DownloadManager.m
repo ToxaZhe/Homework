@@ -25,7 +25,7 @@
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:self delegateQueue:[NSOperationQueue mainQueue]];
     self.bigFileTask = [defaultSession dataTaskWithURL:url];
     self.fileDownloaded = NO;
-    [self.bigFileTask resume];
+//    [self.bigFileTask resume];
 }
 
 -(void) start {
@@ -59,7 +59,6 @@
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     if (dataTask == self.bigFileTask) {
         [self.bigFileData appendData:data];
-//            NSLog(@"%ld, %ld", (long)self.bigFileTask.state, dataTask.state);
         if (self.bigFileData.length == self.expectedBigFileLength) {
             self.finishedDowload = [NSDate date];
             CoraDataManager* dataManager = [CoraDataManager new];

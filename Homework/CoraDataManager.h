@@ -17,6 +17,7 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 - (NSURL *)applicationsDocumentsDirectory;
 -(NSMutableArray*) getSavedDowloadInfo;
+
 -(void) saveDownloadStartDate: (NSDate*)startDate andEndDate: (NSDate*)endDate;
 -(void) clearCoreData;
 @end
