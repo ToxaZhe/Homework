@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CE13766A1DCF5FD80075BA56 /* CoraDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1376691DCF5FD80075BA56 /* CoraDataManager.m */; };
+		CE18A43D1DD7D0CD00B2B201 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE18A43C1DD7D0CD00B2B201 /* PlayerViewController.m */; };
 		CE7997EB1DCBE538002A243E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7997EA1DCBE538002A243E /* main.m */; };
 		CE7997EE1DCBE538002A243E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7997ED1DCBE538002A243E /* AppDelegate.m */; };
 		CE7997F11DCBE538002A243E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7997F01DCBE538002A243E /* ViewController.m */; };
@@ -22,6 +23,8 @@
 /* Begin PBXFileReference section */
 		CE1376681DCF5FD80075BA56 /* CoraDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoraDataManager.h; sourceTree = "<group>"; };
 		CE1376691DCF5FD80075BA56 /* CoraDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoraDataManager.m; sourceTree = "<group>"; };
+		CE18A43B1DD7D0CD00B2B201 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
+		CE18A43C1DD7D0CD00B2B201 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 		CE7997E61DCBE538002A243E /* Homework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE7997EA1DCBE538002A243E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CE7997EC1DCBE538002A243E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -75,6 +78,8 @@
 				CE7997F01DCBE538002A243E /* ViewController.m */,
 				CEA693D41DCDDD9C00D45105 /* DownloadManager.h */,
 				CEA693D51DCDDD9C00D45105 /* DownloadManager.m */,
+				CE18A43B1DD7D0CD00B2B201 /* PlayerViewController.h */,
+				CE18A43C1DD7D0CD00B2B201 /* PlayerViewController.m */,
 				CEA693D71DCDE24800D45105 /* DataTableViewCell.h */,
 				CEA693D81DCDE24800D45105 /* DataTableViewCell.m */,
 				CE1376681DCF5FD80075BA56 /* CoraDataManager.h */,
@@ -174,6 +179,7 @@
 				CE7997EE1DCBE538002A243E /* AppDelegate.m in Sources */,
 				CEA693D91DCDE24800D45105 /* DataTableViewCell.m in Sources */,
 				CE13766A1DCF5FD80075BA56 /* CoraDataManager.m in Sources */,
+				CE18A43D1DD7D0CD00B2B201 /* PlayerViewController.m in Sources */,
 				CEA693D61DCDDD9C00D45105 /* DownloadManager.m in Sources */,
 				CE7997EB1DCBE538002A243E /* main.m in Sources */,
 			);

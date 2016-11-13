@@ -13,6 +13,7 @@
 @interface DownloadManager() <NSURLSessionDataDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate>
 @property (strong,nonatomic) NSDate* startingDowload;
 @property (strong,nonatomic) NSDate* finishedDowload;
+@property (strong,nonatomic) NSString* dataUrl;
 @end
 
 
@@ -20,6 +21,7 @@
 
 - (void)bigFileDownloadingAsync:(NSString *)urlString {
 
+    self.dataUrl = urlString;
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:self delegateQueue:[NSOperationQueue mainQueue]];
@@ -55,6 +57,9 @@
     }
     
 }
+
+
+
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     if (dataTask == self.bigFileTask) {

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "DataTableViewCell.h"
 #import "CoraDataManager.h"
+#import "PlayerViewController.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -29,6 +30,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UINavigationController* nav = [UINavigationController new];
+    [nav setNavigationBarHidden:YES animated:YES];
     NSString* song1UrlString = @"https://promodj.com/download/5908259/Eugene%20Kushner%20-%20the%20dreamer%20%28promodj.com%29.mp3@";
 //    NSString* song2UrlString = @"http://promodj.com/download/5979204/Anna%20Lee%20-%20Live%20%40%20Sea%20Trance%20Fest%20%2831.07.2016%29%20%28promodj.com%29.mp3";
     NSString* song2UrlString = @"https://promodj.com/download/4490536/KRABeretto%20%E2%80%93%20Attack%20on%20titan%20%28promodj.com%29.mp3";
@@ -78,13 +82,16 @@
     NSInteger index = indexPath.row;
     
     cell.download = [_dowloadManagerCollection objectAtIndex:indexPath.row];
-    cell.nameLabel.text = [NSString stringWithFormat:@"Push to dowload Song %li", index + 1];
+    if (cell.moved){
+      cell.nameLabel.text = [NSString stringWithFormat:@"Push to dowload Song %li", index + 1];
+    }
     if (cell.download.fileDownloaded && cell.moved) {
         NSMutableArray* fetchedCoreDataString = self.dataManager.getSavedDowloadInfo;
         NSInteger completedDownloadsNumber = [fetchedCoreDataString count];
         NSInteger finishedNumber = completedDownloadsNumber - 1;
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.progresLabel.text = [fetchedCoreDataString objectAtIndex:0];
+            cell.nameLabel.text = @"Push to listen";
             NSLog(@"%@", fetchedCoreDataString);
             NSLog(@"finished number - %li against indexPath.row - %li", finishedNumber, indexPath.row);
             cell.moved = NO;
@@ -100,6 +107,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DownloadManager *download = [_dowloadManagerCollection objectAtIndex:indexPath.row];
     [download resumePauseDownload];
+    if (download.fileDownloaded){
+        [self performSegueWithIdentifier:@"GoListenTrack" sender:NULL];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"GoListenTrack"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        PlayerViewController *destVC = [segue destinationViewController];
+        destVC.mp3Url = [_urlStrings objectAtIndex:indexPath.row];
+        DownloadManager* download = [_dowloadManagerCollection objectAtIndex:indexPath.row];
+        destVC.mp3File = download.bigFileData;
+    }
 }
 
 
