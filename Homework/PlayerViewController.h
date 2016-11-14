@@ -11,4 +11,5 @@
 @interface PlayerViewController : ViewController
 @property(strong,nonatomic) NSString* mp3Url;
 @property(nonatomic,strong) NSData* mp3File;
+@property(nonatomic,strong)NSString* fileName;
 @end

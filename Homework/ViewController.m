@@ -15,7 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(strong, nonatomic) NSString* dataTableViewCell;
-@property(nonatomic, strong) NSMutableArray*  urlStrings;
+@property(nonatomic, strong) NSArray*  urlStrings;
 @property(nonatomic, strong) DownloadManager* dowloadManager;
 @property(nonatomic, strong) NSString* dowloadingProgress;
 @property(nonatomic, strong) NSTimer* t;
@@ -28,36 +28,16 @@
 
 @implementation ViewController
 
+#pragma mark: native viewController methods
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     UINavigationController* nav = [UINavigationController new];
     [nav setNavigationBarHidden:YES animated:YES];
-    NSString* song1UrlString = @"https://promodj.com/download/5908259/Eugene%20Kushner%20-%20the%20dreamer%20%28promodj.com%29.mp3@";
-//    NSString* song2UrlString = @"http://promodj.com/download/5979204/Anna%20Lee%20-%20Live%20%40%20Sea%20Trance%20Fest%20%2831.07.2016%29%20%28promodj.com%29.mp3";
-    NSString* song2UrlString = @"https://promodj.com/download/4490536/KRABeretto%20%E2%80%93%20Attack%20on%20titan%20%28promodj.com%29.mp3";
-//    NSString* song3UrlString = @"https://promodj.com/download/5866036/Styline%20ft.%20Dragonfly%20-%20Temptation%20%28Original%20Mix%29%20%28promodj.com%29.mp3";
-    NSString* song3UrlString = @"https://promodj.com/download/3782490/Zveroboyz%20-%20Russian%20Language%20%28promodj.com%29.mp3";
-//    NSString* song4UrlString = @"https://promodj.com/download/6087320/Be%20Your%20Self%20%28promodj.com%29.mp3";
-    NSString* song4UrlString = @"https://promodj.com/download/4293305/Syntetica%20Org%20-%20Marine%20Voyager%20%28Radio%20Mix%29%20%28promodj.com%29.mp3";
-//    NSString* song5UrlString = @"https://promodj.com/download/6079318/Mikhail%20Evdokimov%20-%20Deep%20Frequency%20Radio%20Show%20%2329%20%28promodj.com%29.mp3";
-    NSString* song5UrlString = @"https://promodj.com/download/5920607/Kristina%20Schtotz%20-%20Like%20A%20Bird%20%28A-Mase%20Chill-Out%20Version%29%20%28promodj.com%29.mp3";
-    self.dowloadManagerCollection = [NSMutableArray new];
-    self.dataManager = [CoraDataManager new];
-    [self.dataManager clearCoreData];
+    [self initAndCleanCoreData];
     [self.tableView setSeparatorColor:[UIColor cyanColor]];
-    self.urlStrings = [[NSMutableArray alloc] initWithObjects:song1UrlString, song2UrlString,song3UrlString, song4UrlString, song5UrlString,  nil];
-    
-    for (NSString* urlString in _urlStrings) {
-        DownloadManager* loadManager = [[DownloadManager alloc] init];
-        [self.dowloadManagerCollection addObject:loadManager];
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_async(queue, ^{
-            [loadManager bigFileDownloadingAsync:urlString];
-        });
-        
-        
-    }
+    [self fillArrayWithUrlStrings];
 }
 
 
@@ -66,9 +46,23 @@
     self.t = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onTick) userInfo:nil repeats:YES];
 }
 
--(void) onTick{
-    [self.tableView reloadData];
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
 }
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"GoListenTrack"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        PlayerViewController *destVC = [segue destinationViewController];
+        destVC.mp3Url = [_urlStrings objectAtIndex:indexPath.row];
+        DownloadManager* download = [_dowloadManagerCollection objectAtIndex:indexPath.row];
+        destVC.mp3File = download.bigFileData;
+    }
+}
+
+
+
+#pragma mark: table view delegate and data source methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.urlStrings.count;
@@ -112,25 +106,45 @@
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"GoListenTrack"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        PlayerViewController *destVC = [segue destinationViewController];
-        destVC.mp3Url = [_urlStrings objectAtIndex:indexPath.row];
-        DownloadManager* download = [_dowloadManagerCollection objectAtIndex:indexPath.row];
-        destVC.mp3File = download.bigFileData;
-    }
-}
 
+#pragma mark: custom methods
 
--(void)dealloc {
-//    [_t invalidate];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+-(void) fillArrayWithUrlStrings {
+    NSString* song1UrlString = @"https://promodj.com/download/5908259/Eugene%20Kushner%20-%20the%20dreamer%20%28promodj.com%29.mp3@";
+    NSString* song2UrlString = @"http://promodj.com/download/503851/mu5ex%20-%20happy%20new%20you%20%28promodj.com%29.mp3";
+    NSString* song3UrlString = @"https://promodj.com/download/3782490/Zveroboyz%20-%20Russian%20Language%20%28promodj.com%29.mp3";
+    NSString* song4UrlString = @"https://promodj.com/download/4293305/Syntetica%20Org%20-%20Marine%20Voyager%20%28Radio%20Mix%29%20%28promodj.com%29.mp3";
+    NSString* song5UrlString = @"https://promodj.com/download/5920607/Kristina%20Schtotz%20-%20Like%20A%20Bird%20%28A-Mase%20Chill-Out%20Version%29%20%28promodj.com%29.mp3";
+     NSString* song6UrlString = @"http://promodj.com/download/4828023/Da%20Rave%20-%20Milky%20Way%20%28Original%20Mix%29%20%28promodj.com%29.mp3";
+     NSString* song7UrlString = @"http://promodj.com/download/1746719/%D0%AF%D0%B6%D0%B5%D0%92%D0%B8%D0%BA%D0%B0%20%E2%80%94%20%D0%9B%D0%B5%D1%82%D0%BE%20%28original%29%20%28promodj.com%29.mp3";
     
+    
+    self.urlStrings = [[NSArray alloc] initWithObjects:song1UrlString, song2UrlString,song3UrlString, song4UrlString, song5UrlString,song6UrlString, song7UrlString,  nil];
+    [self setDownloadsForDownloadManager:_urlStrings];
 }
 
+-(void) setDownloadsForDownloadManager:(NSArray*) urlStringsArray {
+    self.dowloadManagerCollection = [NSMutableArray new];
+    for (NSString* urlString in urlStringsArray) {
+        DownloadManager* loadManager = [[DownloadManager alloc] init];
+        [self.dowloadManagerCollection addObject:loadManager];
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(queue, ^{
+            [loadManager bigFileDownloadingAsync:urlString];
+        });
+        
+        
+    }
+
+}
+
+-(void) onTick{
+    [self.tableView reloadData];
+}
+
+-(void) initAndCleanCoreData {
+    self.dataManager = [CoraDataManager new];
+    [self.dataManager clearCoreData];
+}
 
 @end

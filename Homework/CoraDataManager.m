@@ -15,7 +15,7 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-
+#pragma mark: intializing methods for CoreData
 - (NSManagedObjectModel *)managedObjectModel {
     if (_managedObjectModel != nil){
         return _managedObjectModel;
@@ -62,6 +62,8 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+#pragma mark:Saving enteties toCoreData methods
+
 -(void) saveDownloadStartDate: (NSDate*)startDate andEndDate: (NSDate*)endDate{
     NSManagedObjectContext *context = [self managedObjectContext];
     NSManagedObject *newDownload = [NSEntityDescription insertNewObjectForEntityForName:@"DownloadInfo" inManagedObjectContext:context];
@@ -73,7 +75,7 @@
         }
 }
 
-
+#pragma mark: Clear CoreData Enteties methods
 -(void) clearCoreData {
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DownloadInfo"];
@@ -84,6 +86,7 @@
     }
 }
 
+#pragma mark: get saved CoreData enteties methods
 -(NSMutableArray*) getSavedDowloadInfo {
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DownloadInfo"];

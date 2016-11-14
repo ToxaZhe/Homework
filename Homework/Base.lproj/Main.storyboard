@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -35,13 +36,13 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="hjl-xp-AGJ">
                                                     <rect key="frame" x="8" y="67" width="359" height="24"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" red="0.15572211266732691" green="0.71930520304568524" blue="0.18149642182711109" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="GDR-WG-9xa">
                                                     <rect key="frame" x="0.0" y="8" width="375" height="26"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" red="0.19361022741075412" green="0.28748712763926076" blue="0.92948921319796951" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -99,20 +100,32 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOG-rq-zzv">
                                 <rect key="frame" x="159" y="309" width="56" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="play"/>
+                                <state key="normal" title="play">
+                                    <color key="titleColor" red="1" green="0.96686646170000001" blue="0.25684655210000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="PlayBtnAction:" destination="cRb-dI-HDZ" eventType="touchUpInside" id="ZzJ-oL-bSc"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="sHY-sQ-aZp">
+                                <rect key="frame" x="24" y="72" width="327" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" red="0.95994343680749272" green="0.96674726075981243" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.16804933620000001" green="0.62037794499999999" blue="0.24350093759999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="sHY-sQ-aZp" firstAttribute="top" secondItem="AgZ-C1-RJz" secondAttribute="bottom" constant="8" id="PGN-3w-qSI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="sHY-sQ-aZp" secondAttribute="trailing" constant="8" id="omb-MV-uxE"/>
                             <constraint firstItem="lOG-rq-zzv" firstAttribute="centerY" secondItem="4eM-oC-Neu" secondAttribute="centerY" id="ouh-h4-RjG"/>
+                            <constraint firstItem="sHY-sQ-aZp" firstAttribute="leading" secondItem="4eM-oC-Neu" secondAttribute="leadingMargin" constant="8" id="umD-Bl-vWJ"/>
                             <constraint firstItem="lOG-rq-zzv" firstAttribute="centerX" secondItem="4eM-oC-Neu" secondAttribute="centerX" id="v4N-n3-ucc"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="playButton" destination="lOG-rq-zzv" id="vLf-B3-nnA"/>
+                        <outlet property="songNameLabel" destination="sHY-sQ-aZp" id="kf7-Yb-k5H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rPS-58-5g6" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -13,6 +13,7 @@
 @interface PlayerViewController ()
 @property(nonatomic,strong) AVAudioPlayer* musicPlayer;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property (weak, nonatomic) IBOutlet UILabel *songNameLabel;
 
 @end
 
@@ -24,34 +25,51 @@
 }
 
 
+# pragma mark: self ViewController native methods method
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     UINavigationController* nav = [UINavigationController new];
     [nav setNavigationBarHidden:NO animated:NO];
+    [self initPlayerWithData];
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    _songNameLabel.text = _fileName;
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.musicPlayer = nil;
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark: Methods to handle with AVAudioPlayer
+
+-(void) initPlayerWithData {
     NSError* error;
     NSURL *url = [NSURL URLWithString:_mp3Url];
     
-    NSString *fileName = [url pathComponents].lastObject;
+    self.fileName = [url pathComponents].lastObject;
     NSURL *documentsURL = [self documentsDirectoryUrl];
-    NSString *fullFileName = [NSString stringWithFormat:@"%@/%@", documentsURL.path, fileName];
+    NSString *fullFileName = [NSString stringWithFormat:@"%@/%@.mp3", documentsURL.path, _fileName];
     if ([[NSFileManager defaultManager] fileExistsAtPath:fullFileName]) {
-        NSData* mp3Data = [NSData dataWithContentsOfFile:fullFileName];
-        self.musicPlayer = [[AVAudioPlayer alloc] initWithData:mp3Data error:&error];
+        self.mp3File = [NSData dataWithContentsOfFile:fullFileName];
+        self.musicPlayer = [[AVAudioPlayer alloc] initWithData:_mp3File error:&error];
         [self.musicPlayer prepareToPlay];
         self.musicPlayer.numberOfLoops = -1;
     }
     
-//    self.musicPlayer = [[AVAudioPlayer alloc] initWithData:_mp3File error:&error];
-//    [self.musicPlayer prepareToPlay];
-//    self.musicPlayer.numberOfLoops = -1;
-    
 }
 
--(void) playSongAgain {
-    [self.musicPlayer play];
-}
 
-- (IBAction)PlayBtnAction:(UIButton *)sender {
+-(void) playPausePlayer {
     if (_musicPlayer.playing) {
         NSString *play = [NSString stringWithFormat:@"Play"];
         [_playButton setTitle:play forState:0];
@@ -61,18 +79,13 @@
         [_playButton setTitle:pause forState:0];
         [self.musicPlayer play];
     }
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.musicPlayer = nil;
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+- (IBAction)PlayBtnAction:(UIButton *)sender {
+    [self playPausePlayer];
+    }
+
 
 
 @end
