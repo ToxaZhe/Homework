@@ -58,15 +58,33 @@
     
 }
 
+- (NSURL *)documentsDirectoryUrl {
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (void)saveMp3FileToPath:(NSData *)mp3Data
+              mp3FileName:(NSString *)mp3FileName {
+    NSURL *documentsURL = [self documentsDirectoryUrl];
+    NSString *filePath = documentsURL.path;
+    NSString *fileName = [NSString stringWithFormat:@"%@/%@", filePath, mp3FileName];
+    [mp3Data writeToFile:fileName atomically:YES];
+}
 
 
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     if (dataTask == self.bigFileTask) {
+        if (data) {
+            
+        }
+        
         [self.bigFileData appendData:data];
         if (self.bigFileData.length == self.expectedBigFileLength) {
             self.finishedDowload = [NSDate date];
             CoraDataManager* dataManager = [CoraDataManager new];
+            NSURL *url = [NSURL URLWithString:_dataUrl];
+            NSString* fileName = [[url pathComponents] lastObject];
+            [self saveMp3FileToPath:data mp3FileName:fileName];
             [dataManager saveDownloadStartDate:_startingDowload andEndDate:_finishedDowload];
             self.fileDownloaded = YES;
         }

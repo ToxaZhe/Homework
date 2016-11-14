@@ -18,14 +18,32 @@
 
 @implementation PlayerViewController
 
+
+- (NSURL *)documentsDirectoryUrl {
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     UINavigationController* nav = [UINavigationController new];
     [nav setNavigationBarHidden:NO animated:NO];
     NSError* error;
-    self.musicPlayer = [[AVAudioPlayer alloc] initWithData:_mp3File error:&error];
-    [self.musicPlayer prepareToPlay];
-    self.musicPlayer.numberOfLoops = -1;
+    NSURL *url = [NSURL URLWithString:_mp3Url];
+    
+    NSString *fileName = [url pathComponents].lastObject;
+    NSURL *documentsURL = [self documentsDirectoryUrl];
+    NSString *fullFileName = [NSString stringWithFormat:@"%@/%@", documentsURL.path, fileName];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:fullFileName]) {
+        NSData* mp3Data = [NSData dataWithContentsOfFile:fullFileName];
+        self.musicPlayer = [[AVAudioPlayer alloc] initWithData:mp3Data error:&error];
+        [self.musicPlayer prepareToPlay];
+        self.musicPlayer.numberOfLoops = -1;
+    }
+    
+//    self.musicPlayer = [[AVAudioPlayer alloc] initWithData:_mp3File error:&error];
+//    [self.musicPlayer prepareToPlay];
+//    self.musicPlayer.numberOfLoops = -1;
     
 }
 
