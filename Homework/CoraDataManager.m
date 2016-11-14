@@ -100,7 +100,7 @@
         NSDate *finishedDate = [downloadDate valueForKey:@"finishedTime"];
         NSString* started = [dateFormatter stringFromDate:startedDate];
         NSString* finished = [dateFormatter stringFromDate:finishedDate];
-        NSString* loadedFileInfo = [NSString stringWithFormat:@"starting date %@ - finished date %@", started, finished];
+        NSString* loadedFileInfo = [NSString stringWithFormat:@"started %@ - finished %@", started, finished];
         [dateStrings addObject:loadedFileInfo];
     }
     return dateStrings;

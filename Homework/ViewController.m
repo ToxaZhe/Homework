@@ -83,6 +83,7 @@
         NSMutableArray* fetchedCoreDataString = self.dataManager.getSavedDowloadInfo;
         NSInteger completedDownloadsNumber = [fetchedCoreDataString count];
         NSInteger finishedNumber = completedDownloadsNumber - 1;
+        if ([fetchedCoreDataString count] != 0){
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.progresLabel.text = [fetchedCoreDataString objectAtIndex:0];
             cell.nameLabel.text = @"Push to listen";
@@ -90,6 +91,7 @@
             NSLog(@"finished number - %li against indexPath.row - %li", finishedNumber, indexPath.row);
             cell.moved = NO;
         });
+        }
     } else if (cell.moved) {
         NSString* progress = [NSString stringWithFormat:@"%.2f", (double)cell.download.bigFileData.length / (double)cell.download.expectedBigFileLength * 100.0];
         cell.progresLabel.text = progress;
@@ -115,10 +117,11 @@
     NSString* song3UrlString = @"https://promodj.com/download/3782490/Zveroboyz%20-%20Russian%20Language%20%28promodj.com%29.mp3";
     NSString* song4UrlString = @"https://promodj.com/download/4293305/Syntetica%20Org%20-%20Marine%20Voyager%20%28Radio%20Mix%29%20%28promodj.com%29.mp3";
     NSString* song5UrlString = @"https://promodj.com/download/5920607/Kristina%20Schtotz%20-%20Like%20A%20Bird%20%28A-Mase%20Chill-Out%20Version%29%20%28promodj.com%29.mp3";
+    NSString* song6UrlString = @"http://promodj.com/download/4828023/Da%20Rave%20-%20Milky%20Way%20%28Original%20Mix%29%20%28promodj.com%29.mp3";
+    NSString* song7UrlString = @"http://promodj.com/download/1746719/%D0%AF%D0%B6%D0%B5%D0%92%D0%B8%D0%BA%D0%B0%20%E2%80%94%20%D0%9B%D0%B5%D1%82%D0%BE%20%28original%29%20%28promodj.com%29.mp3";
+    NSString* song7UrlString = @"";
     
-    
-    
-    self.urlStrings = [[NSArray alloc] initWithObjects:song1UrlString, song2UrlString,song3UrlString, song4UrlString, song5UrlString,  nil];
+    self.urlStrings = [[NSArray alloc] initWithObjects:song1UrlString, song2UrlString,song3UrlString, song4UrlString, song5UrlString,song6UrlString, song7UrlString,  nil];
     [self setDownloadsForDownloadManager:_urlStrings];
 }
 
