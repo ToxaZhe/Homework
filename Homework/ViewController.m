@@ -21,6 +21,7 @@
 @property(nonatomic, strong) NSTimer* t;
 @property(nonatomic, strong) CoraDataManager* dataManager;
 @property(nonatomic, strong) NSMutableArray* dowloadManagerCollection;
+@property(nonatomic, strong) NSMutableDictionary* completedDownloadsDates;
 
 @property BOOL finished;
 
@@ -35,8 +36,9 @@
     
     UINavigationController* nav = [UINavigationController new];
     [nav setNavigationBarHidden:YES animated:YES];
-    [self initAndCleanCoreData];
     [self.tableView setSeparatorColor:[UIColor cyanColor]];
+    _completedDownloadsDates = [[NSMutableDictionary alloc] init];
+    [self initAndCleanCoreData];
     [self fillArrayWithUrlStrings];
 }
 
@@ -76,21 +78,27 @@
     NSInteger index = indexPath.row;
     
     cell.download = [_dowloadManagerCollection objectAtIndex:indexPath.row];
-    if (cell.moved){
-      cell.nameLabel.text = [NSString stringWithFormat:@"Push to dowload Song %li", index + 1];
-    }
-    if (cell.download.fileDownloaded && cell.moved) {
+    if (cell.download.fileDownloaded) {
         NSMutableArray* fetchedCoreDataString = self.dataManager.getSavedDowloadInfo;
-        NSInteger completedDownloadsNumber = [fetchedCoreDataString count];
-        NSInteger finishedNumber = completedDownloadsNumber - 1;
+//        NSInteger completedDownloadsNumber = [fetchedCoreDataString count];
+        if (cell.moved) {
+          [self.completedDownloadsDates setObject:[fetchedCoreDataString lastObject] forKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
+        }
+        
+//        NSInteger finishedNumber = completedDownloadsNumber - 1;
         dispatch_async(dispatch_get_main_queue(), ^{
-            cell.progresLabel.text = [fetchedCoreDataString objectAtIndex:0];
+            cell.progresLabel.text = [self.completedDownloadsDates objectForKey:[NSString stringWithFormat:@"%ld", (long)indexPath.row]];
+            NSLog(@"%@", [self.completedDownloadsDates objectForKey:[NSString stringWithFormat:@"%@", indexPath]]);
             cell.nameLabel.text = @"Push to listen";
-            NSLog(@"%@", fetchedCoreDataString);
-            NSLog(@"finished number - %li against indexPath.row - %li", finishedNumber, indexPath.row);
+            NSLog(@"%@", self.completedDownloadsDates);
+//            NSLog(@"finished number - %li against indexPath.row - %li", finishedNumber, indexPath.row);
             cell.moved = NO;
         });
+        if (fetchedCoreDataString.count == _urlStrings.count){
+            [_t invalidate];
+        }
     } else if (cell.moved) {
+         cell.nameLabel.text = [NSString stringWithFormat:@"Push to dowload Song %li", index + 1];
         NSString* progress = [NSString stringWithFormat:@"%.2f", (double)cell.download.bigFileData.length / (double)cell.download.expectedBigFileLength * 100.0];
         cell.progresLabel.text = progress;
     }

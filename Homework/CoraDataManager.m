@@ -92,8 +92,12 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"DownloadInfo"];
     NSMutableArray* downloadInfoCollection = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
     NSMutableArray * dateStrings = [NSMutableArray array];
-    [self clearCoreData];
-    for (NSManagedObject* downloadDate in downloadInfoCollection) {
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"finishedTime" ascending:YES];
+    NSArray* sortDescriptors = @[sortDescriptor];
+    NSArray* sortedCoreDataDownloadInfo = [downloadInfoCollection sortedArrayUsingDescriptors:sortDescriptors];
+//    [self clearCoreData];
+    for (NSManagedObject* downloadDate in sortedCoreDataDownloadInfo) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"dd.MM.YY HH:mm:ss"];
         NSDate *startedDate = [downloadDate valueForKey:@"startingTime"];
